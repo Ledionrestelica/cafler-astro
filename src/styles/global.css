@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-blue-50: #eef6ff;
+  --color-blue-100: #d9e9ff;
+  --color-blue-200: #bcdaff;
+  --color-blue-300: #8ec3ff;
+  --color-blue-400: #59a2ff;
+  --color-blue-500: #2474ff;
+  --color-blue-600: #1b5cf5;
+  --color-blue-700: #1447e1;
+  --color-blue-800: #173ab6;
+  --color-blue-900: #19358f;
+  --color-blue-950: #142257;
+}
+
+@font-face {
+  font-family: "Regular";
+  src: url("/fonts/ProximaNova-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Semibold";
+  src: url("/fonts/ProximaNova-Semibold.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Extrabld";
+  src: url("/fonts/ProximaNova-Extrabld.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Black";
+  src: url("/fonts/ProximaNova-Black.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.regular {
+  font-family: "Regular", sans-serif;
+}
+.semibold {
+  font-family: "Semibold", sans-serif;
+}
+.extrabold {
+  font-family: "Extrabld", sans-serif;
+}
+.black {
+  font-family: "Black", sans-serif;
+}
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}

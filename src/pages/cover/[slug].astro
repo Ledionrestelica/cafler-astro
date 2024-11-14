@@ -1,0 +1,122 @@
+---
+import Mainlayout from "../../layouts/ProductLayout.astro"
+import { sanityClient as client } from "sanity:client";
+import type { Cover } from "../../utils/types";
+import ProductImages from "../../components/ProductImages";
+import Stars from "../../components/Stars"
+import Dropdown from "../../components/Dropdown"
+import Price from "../../components/Price"
+import CartButton from "../../components/CartButton"
+
+export async function getStaticPaths() {
+  const covers = await client.fetch(`*[_type == "carCover"]{
+    slug {
+      current
+    }
+  }`);
+
+  return covers
+    .filter((cover: any) => cover.slug && cover.slug.current)
+    .map((cover: any) => ({
+      params: {
+        slug: cover.slug.current,
+      },
+    }));
+}
+
+const { slug } = Astro.params;
+
+const cover:Cover = await client.fetch(`*[_type == "carCover" && slug.current == $slug][0]{
+  _id,
+  title,
+  image,
+    isOnsale,
+    salePercent,
+    year,
+  price,
+    description,
+    slug{
+    current
+    },
+  carMake->{
+    name,
+    logo
+  },
+    carModel->{
+      model
+    }
+  
+}`,{slug})
+---
+<Mainlayout title={cover.title}>
+    <div class="flex flex-col md:flex-row gap-8 py-4">
+        <ProductImages image={cover.image} client:load></ProductImages>
+        <div class="flex-1 flex flex-col gap-4">
+            <div class="flex gap-2 lg:flex-row flex-col-reverse">
+                <h1 class="black text-[26px] uppercase">{cover.title} cover</h1>
+                <div class="bg-[var(--color-blue-50)] text-[var(--color-blue-600)] w-max text-[16px] text-center py-2 px-8 rounded-full semibold uppercase flex items-center justify-center gap-2">Fits every {cover.carMake.name} {cover.carModel.model} 
+                    <span>
+                        <svg width="22" height="22" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.4001 4.94995L6.9751 12.375L3.6001 8.99995" stroke="#2474FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <Stars star={5}/>
+            <p class="regular text-[#121212] text-[16px]">{cover.description}</p>
+            <div class="grid gap-6 grid-cols-2">
+                <div class="flex gap-2">
+                    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0.5" y="0.5" width="25" height="25" rx="3.5" stroke="black"/>
+                        <line x1="5" y1="21.1333" x2="21.3222" y2="21.1333" stroke="black" stroke-width="1.73333"/>
+                        <line x1="5.6" y1="14.55" x2="8.6" y2="18.55" stroke="black" stroke-width="1.5"/>
+                        <line x1="9.61286" y1="12.8774" x2="10.6129" y2="17.8774" stroke="black" stroke-width="1.25"/>
+                        <path d="M16.704 17.931L11.6933 19.4464L18.1489 4.76097L20.4356 5.88909L19.08 8.8953L20.3891 10.0276L16.704 17.931Z" fill="#121212"/>
+                    </svg>
+                    <p class="semibold text-[16px]">Scratch Resistant</p>
+                </div>
+                <div class="flex gap-2">
+                    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0.5" y="0.5" width="25" height="25" rx="3.5" stroke="black"/>
+                        <line x1="5" y1="21.1333" x2="21.3222" y2="21.1333" stroke="black" stroke-width="1.73333"/>
+                        <line x1="5.6" y1="14.55" x2="8.6" y2="18.55" stroke="black" stroke-width="1.5"/>
+                        <line x1="9.61286" y1="12.8774" x2="10.6129" y2="17.8774" stroke="black" stroke-width="1.25"/>
+                        <path d="M16.704 17.931L11.6933 19.4464L18.1489 4.76097L20.4356 5.88909L19.08 8.8953L20.3891 10.0276L16.704 17.931Z" fill="#121212"/>
+                    </svg>
+                    <p class="semibold text-[16px]">Waterproof</p>
+                </div>
+                <div class="flex gap-2">
+                    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0.5" y="0.5" width="25" height="25" rx="3.5" stroke="black"/>
+                        <line x1="5" y1="21.1333" x2="21.3222" y2="21.1333" stroke="black" stroke-width="1.73333"/>
+                        <line x1="5.6" y1="14.55" x2="8.6" y2="18.55" stroke="black" stroke-width="1.5"/>
+                        <line x1="9.61286" y1="12.8774" x2="10.6129" y2="17.8774" stroke="black" stroke-width="1.25"/>
+                        <path d="M16.704 17.931L11.6933 19.4464L18.1489 4.76097L20.4356 5.88909L19.08 8.8953L20.3891 10.0276L16.704 17.931Z" fill="#121212"/>
+                    </svg>
+                    <p class="semibold text-[16px]">Costum Fit</p>
+                </div>
+                <div class="flex gap-2">
+                    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0.5" y="0.5" width="25" height="25" rx="3.5" stroke="black"/>
+                        <line x1="5" y1="21.1333" x2="21.3222" y2="21.1333" stroke="black" stroke-width="1.73333"/>
+                        <line x1="5.6" y1="14.55" x2="8.6" y2="18.55" stroke="black" stroke-width="1.5"/>
+                        <line x1="9.61286" y1="12.8774" x2="10.6129" y2="17.8774" stroke="black" stroke-width="1.25"/>
+                        <path d="M16.704 17.931L11.6933 19.4464L18.1489 4.76097L20.4356 5.88909L19.08 8.8953L20.3891 10.0276L16.704 17.931Z" fill="#121212"/>
+                    </svg>
+                    <p class="semibold text-[16px]">Easy to use</p>
+                </div>
+            </div>
+            <Dropdown client:load/>
+            <Price
+                price={cover.price}
+                isOnsale={cover.isOnsale}
+                salePercent={cover.salePercent}
+                id={cover._id}
+                title={cover.title}
+                image={cover.image}
+                client:load
+            />
+        </div>
+</div>
+        
+</Mainlayout>

@@ -1,0 +1,39 @@
+---
+import type { SanityDocument } from "@sanity/client";
+import { loadQuery } from "../../sanity/lib/load-query";
+import PortableText from "../../components/PortableText.astro";
+
+interface Post extends SanityDocument {
+  title: string;
+  author: string;
+  slug: {
+    current: string;
+  };
+  content: any;
+}
+
+export async function getStaticPaths() {
+  const { data: posts } = await loadQuery<Post[]>({
+    query: `*[_type == "post"]`,
+  });
+
+  return posts.map((post) => {
+    return {
+      params: {
+        slug: post.slug.current,
+      },
+    };
+  });
+}
+
+const { slug } = Astro.params;
+
+const { data: post } = await loadQuery<Post>({
+  query: `*[_type == "post" && slug.current == $slug][0]`,
+  params: { slug },
+});
+
+---
+
+<h1>A post about {post.title} by {post.author}</h1>
+<PortableText portableText={post.content} />

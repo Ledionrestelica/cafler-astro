@@ -48,7 +48,7 @@ const cover:Cover = await client.fetch(`*[_type == "carCover" && slug.current ==
   
 }`,{slug})
 ---
-<Mainlayout title={cover.title}>
+<Mainlayout slug={slug} image={cover.image} title={cover.title}>
     <div class="flex flex-col md:flex-row gap-8 py-4">
         <ProductImages image={cover.image} client:load></ProductImages>
         <div class="flex-1 flex flex-col gap-4">

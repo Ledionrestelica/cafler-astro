@@ -2,8 +2,10 @@
 import Navbar from "../components/Navbar"
 interface Props {
   title:string;
+  slug:string;
+  image:string;
 }
-const {title} = Astro.props;
+const {title, slug, image} = Astro.props;
 import '../styles/global.css'
 ---
 <html lang="en">
@@ -11,7 +13,26 @@ import '../styles/global.css'
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="/favicon.svg">
-    <title>{title}</title>
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <title>{title} Car Cover - Cafler Covers</title>
+    <meta name="description" content={`Protect your ${title} with Cafler Covers. Made with premium materials that guarantee life-long resistance.`}>
+    <meta property="og:url" content={`https://cafler-astro.vercel.app/cover/${slug}`}>
+    <meta property="og:type" content="website">
+    <meta property="og:title" content={`${title} Car Cover - Cafler Covers`}>
+    <meta property="og:description" content={`Protect your ${title} with Cafler Covers. Made with premium materials that guarantee life-long resistance.`}>
+    <meta property="og:image" content={image}>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="cafler-astro.vercel.app">
+    <meta property="twitter:url" content={`https://cafler-astro.vercel.app/cover/${slug}`}>
+    <meta name="twitter:title" content={`${title} Car Cover - Cafler Covers`}>
+    <meta name="twitter:description" content={`Protect your ${title} with Cafler Covers. Made with premium materials that guarantee life-long resistance.`}>
+    <meta name="twitter:image" content={image}>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
 
   </head>
   <body class="bg-[#fcfcfc]">

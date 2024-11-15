@@ -5,7 +5,10 @@ import react from "@astrojs/react";
 
 import tailwind from "@astrojs/tailwind";
 
+import sitemap from "@astrojs/sitemap";
+
 export default defineConfig({
+  site: "https://cafler-astro.vercel.app",
   integrations: [
     sanity({
       projectId: "3poolcg1",
@@ -18,5 +21,6 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
+    sitemap(),
   ],
 });

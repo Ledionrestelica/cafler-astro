@@ -59,9 +59,7 @@ const Navigation = () => {
             <img src={menu.src} alt="menu" width={30} height={30} />
           </SheetTrigger>
           <SheetContent side="left">
-            <SheetTitle>
-              <h1 className="text-2xl">Menu</h1>
-            </SheetTitle>
+            <SheetTitle className="text-2xl">Menu</SheetTitle>
           </SheetContent>
         </Sheet>
         <a aria-label="Back to home" href="/">
@@ -135,20 +133,16 @@ const Navigation = () => {
                 height={24}
               />
             </SheetTrigger>
-            <SheetContent>
-              <SheetTitle>
-                <h1 className="text-2xl black">YOUR CART</h1>
-              </SheetTitle>
-              <SheetDescription>
-                <p className="regular text-[16px]">
-                  Free shipping for any orders above $100.00
-                </p>
+            <SheetContent className="max-sm:w-full">
+              <SheetTitle className="text-2xl black">YOUR CART</SheetTitle>
+              <SheetDescription className="regular text-[16px]">
+                Free shipping for any orders above $100.00
               </SheetDescription>
               <div className="pt-8 space-y-3 overflow-y-scroll">
                 {Object.values($cartItems).length ? (
                   <div className="space-y-3">
                     {Object.values($cartItems).map((cartItem) => (
-                      <div className="flex gap-2 h-[110px]">
+                      <div key={cartItem.id} className="flex gap-2 h-[110px]">
                         <div className="border aspect-square w-[100px] border-stroke">
                           <img
                             className="aspect-square"

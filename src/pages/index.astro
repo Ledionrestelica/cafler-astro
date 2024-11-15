@@ -3,10 +3,21 @@ import Mainlayout from "@/layouts/MainLayout.astro";
 import Hero from "@/components/Hero";
 import Filter from "@/components/Filter"
 import Features from "../components/Features"
-import '../styles/global.css'
+import Usp from "../components/Usp.astro"
+import Grid from "../components/Grid.astro"
+import Ratings from "../components/Ratings"
+import FeaturedMakes from "../components/FeaturedMakes.astro"
+import Blog from "../components/Blogs.astro"
+import Footer from "@/components/Footer.astro";
 ---
     <Mainlayout>
       <Hero />
       <Features />
       <Filter client:only="react"/>
+      <Usp />
+      <Grid />
+      <Ratings client:load />
+      <FeaturedMakes />
+      <Blog />
+      <Footer />
     </Mainlayout>

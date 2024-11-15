@@ -1,0 +1,60 @@
+---
+import type { SanityDocument } from "@sanity/client";
+import { loadQuery } from "../sanity/lib/load-query";
+import { urlForImage } from "@/sanity/lib/urlForImage";
+
+interface Post extends SanityDocument {
+  title: string;
+  author: string;
+  slug: {
+    current: string;
+  };
+  content: any;
+}
+
+const { data: posts } = await loadQuery<Post[]>({
+  query: `*[_type == "post"]`,
+});
+
+function extractPlainText(content: any): string {
+  if (!content) return "";
+  return content
+    .map((block: any) => (block.children ? block.children.map((child: any) => child.text).join(" ") : ""))
+    .join(" ");
+}
+---
+
+<div class="w-full h-max py-[60px] bg-[#f6f6f6]">
+  <div class="max-w-[1440px] mx-auto px-4 flex flex-col">
+    <div class="py-4 black text-[26px]">FROM THE GARAGE</div>
+    <div class="w-full overflow-x-scroll flex gap-4">
+      {posts.map((post: Post) => {
+        const previewText = extractPlainText(post.content);
+        return (
+          <div class="w-[414px] h-[450px] overflow-hidden flex flex-col gap-3 bg-white">
+            <div>
+              <img class="w-full max-w-[100%] h-full object-cover" src={urlForImage(post.image.asset).url()} />
+            </div>
+            <div class="py-[5px] px-[12px] flex flex-col justify-between h-full">
+                <h3 class="black text-[22px]">{post.title}</h3>
+                <p class="line-clamp-4 regular text-[16px]">
+                    {previewText}
+                </p>
+                <a href={`blog/${post.slug.current}`} class="text-[var(--color-blue-600)] extrabold">READ MORE</a>
+            </div>
+
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</div>
+
+<style>
+  .line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

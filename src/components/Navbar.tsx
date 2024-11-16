@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import logo from "../assets/icons/logo.svg";
 import menu from "../assets/icons/menu.svg";
-import search from "../assets/icons/search.svg";
+import searchLogo from "../assets/icons/search.svg";
 import shoppingCart from "../assets/icons/shoppingCart.svg";
 import arrow from "../assets/icons/arrow.svg";
 import {
@@ -21,11 +21,13 @@ import {
   DialogHeader,
 } from "./ui/dialog";
 import { isCartOpen, cartItems } from "@/shared/cart";
+import { navigate } from "astro:transitions/client";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const $isCartOpen = useStore(isCartOpen);
   const $cartItems = useStore(cartItems);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     if (isOpen) {
@@ -38,6 +40,17 @@ const Navigation = () => {
       document.body.style.overflow = "auto";
     };
   }, [isOpen]);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearch(e.target.value);
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault(); // Prevents form default submission behavior
+    if (search.trim()) {
+      navigate(`/search/${encodeURIComponent(search.trim())}`);
+    }
+  }
 
   return (
     <div
@@ -116,11 +129,38 @@ const Navigation = () => {
         <div className="flex gap-2">
           <Dialog>
             <DialogTrigger>
-              <img src={search.src} width={24} height={24} alt="search"></img>
+              <img
+                src={searchLogo.src}
+                style={{ width: "auto", height: "auto" }}
+                alt="Cart"
+                width={24}
+                height={24}
+              />
             </DialogTrigger>
-            <DialogContent>
-              <DialogDescription>Search For a Cover</DialogDescription>
-              <DialogHeader>Search</DialogHeader>
+            <DialogContent className="max-sm:max-w-[90%]">
+              <DialogHeader className="extrabold text-lg mx-auto">
+                Search for a Car Cover
+              </DialogHeader>
+              <DialogDescription>
+                <form
+                  className="w-full flex flex-col gap-4"
+                  onSubmit={handleSubmit}
+                >
+                  <input
+                    type="text"
+                    className="w-[80%] px-2 mx-auto border rounded-none border-[var(--color-blue-500)] text-black py-3 regular"
+                    placeholder="Search for a car cover"
+                    value={search}
+                    onChange={handleChange}
+                  />
+                  <button
+                    className="px-[40px] w-max mx-auto py-2 bg-[var(--color-blue-600)] extrabold text-[16px] text-white"
+                    type="submit"
+                  >
+                    Find
+                  </button>
+                </form>
+              </DialogDescription>
             </DialogContent>
           </Dialog>
           <Sheet>

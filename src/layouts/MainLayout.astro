@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 import Navbar from "@/components/Navbar";
 import '../styles/global.css'
 ---
@@ -26,9 +27,10 @@ import '../styles/global.css'
     <meta name="twitter:description" content="Cafler Covers provides premium, custom-fit car covers for all vehicle makes and models. Protect your car with durable, stylish covers designed for optimal fit and long-lasting protection.">
     <meta name="twitter:image" content="https://opengraph.b-cdn.net/production/images/7f9f00e1-1ae8-4018-9c7b-a451e48c23f9.jpg?token=KvtAQoPv19yRVj13fLGdI88UAzjpu4vKsfSkpOWUk6k&height=675&width=1200&expires=33267674567">
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <ViewTransitions />
   </head>
   <body class="">
-    <Navbar client:idle/>
+    <Navbar client:load/>
     <main>
       <slot />
     </main>

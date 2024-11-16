@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function ProductImages({ image }: { image: string }) {
   const [activeImage, setActiveImage] = useState(0);
-  const images = [image, "/cloth.jpg", "/material.jpg", "/cloth.jpg"];
+  const images = [image, "/210-d.jpg", "/fit-picture.jpg", "/cloth.jpg"];
 
   return (
     <div className="flex flex-1 flex-col-reverse gap-2 md:flex-row w-full h-full">
@@ -25,7 +25,7 @@ export default function ProductImages({ image }: { image: string }) {
           </div>
         ))}
       </div>
-      <div className="w-full border border-stroke">
+      <div className="w-full border aspect-square border-stroke">
         <img
           src={images[activeImage]}
           alt="Car Cover Photos"

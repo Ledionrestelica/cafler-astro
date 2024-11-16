@@ -7,8 +7,11 @@ import tailwind from "@astrojs/tailwind";
 
 import sitemap from "@astrojs/sitemap";
 
+import vercel from "@astrojs/vercel/serverless";
+
 export default defineConfig({
   site: "https://cafler-astro.vercel.app",
+
   integrations: [
     sanity({
       projectId: "3poolcg1",
@@ -23,4 +26,7 @@ export default defineConfig({
     }),
     sitemap(),
   ],
+
+  output: "hybrid",
+  adapter: vercel(),
 });

@@ -41,8 +41,8 @@ try {
     ) : (
     <>
         <div class="flex flex-col gap-4 mt-10 px-4 ">
-        {result.map((item: { title: string, description:string, price:number, image:string, _id:string; }) => (
-            <SearchResult id={item._id} title={item.title} description={item.description} price={item.price} image={item.image}></SearchResult>
+        {result.map((item: { title: string, description:string, price:number, image:string, _id:string; slug:{current:string} }) => (
+            <SearchResult id={item._id} title={item.title} description={item.description} price={item.price} image={item.image} slug={item.slug.current}></SearchResult>
         ))}
         </div>
     </>

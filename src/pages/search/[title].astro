@@ -1,4 +1,11 @@
 ---
+import SearchLayout from "@/layouts/SearchLayout.astro";
+import SearchResult from "@/components/SearchResult.astro";
+import Usp from "@/components/Usp.astro";
+import Grid from "@/components/Grid.astro";
+import FeaturedMakes from "@/components/FeaturedMakes.astro";
+import Footer from "@/components/Footer.astro";
+
 export const prerender = false;
 const { title } = Astro.params;
 
@@ -10,7 +17,7 @@ try {
   const response = await fetch(`https://cafler-astro.vercel.app/find/${encodedTitle}`);
   
   if (!response.ok) {
-    throw new Error(`Cover not found: ${response.statusText}`);
+    throw new Error(`Cover not found`);
   }
 
   result = await response.json();
@@ -18,18 +25,33 @@ try {
   error = (err as Error).message;
 }
 ---
-{error ? (
-  <>
-    <h1>Error</h1>
-    <p>{error}</p>
-  </>
-) : (
-  <>
-    <h1>Results for "{title}"</h1>
-    <ul>
-      {result.map((item: { title: string }) => (
-        <li>{item.title}</li>
-      ))}
-    </ul>
-  </>
-)}
+<SearchLayout>
+<div class="max-w-[1440px] mx-auto py-10">
+    <div class="bg-[var(--color-blue-900)] py-10 space-y-4">
+        <h1 class="black text-4xl text-white text-center uppercase">
+            We have found a cover<br> that fits your {title}
+        </h1>
+        <p class="semibold text-white text-center">Browse through thousands of car models</p>
+    </div>
+    {error ? (
+    <div class="w-full flex items-center justify-center flex-col py-10">
+        <h1 class="black text-black text-3xl">ERROR</h1>
+        <p class="regular">{error}</p>
+    </div>
+    ) : (
+    <>
+        <div class="flex flex-col gap-4 mt-10 px-4 ">
+        {result.map((item: { title: string, description:string, price:number, image:string, _id:string; }) => (
+            <SearchResult id={item._id} title={item.title} description={item.description} price={item.price} image={item.image}></SearchResult>
+        ))}
+        </div>
+    </>
+    )}
+    
+</div>
+<Usp/>
+<Grid />
+<FeaturedMakes/>
+<Footer/>
+
+</SearchLayout>
